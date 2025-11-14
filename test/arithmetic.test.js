@@ -94,7 +94,48 @@ describe('Arithmetic', function () {
     });
 
 // TODO: Challenge #1
- 
+    describe('Power', function () {
+        it('raises positive integer to integer power', function (done) {
+            request.get('/arithmetic?operation=power&operand1=2&operand2=5')
+                .expect(200)
+                .end(function (err, res) {
+                    expect(res.body).to.eql({ result: 32 });
+                    done();
+                });
+        });
+        it('power with zero exponent', function (done) {
+            request.get('/arithmetic?operation=power&operand1=42&operand2=0')
+                .expect(200)
+                .end(function (err, res) {
+                    expect(res.body).to.eql({ result: 1 });
+                    done();
+                });
+        });
+        it('power with negative exponent', function (done) {
+            request.get('/arithmetic?operation=power&operand1=2&operand2=-1')
+                .expect(200)
+                .end(function (err, res) {
+                    expect(res.body).to.eql({ result: 0.5 });
+                    done();
+                });
+        });
+        it('negative base odd exponent', function (done) {
+            request.get('/arithmetic?operation=power&operand1=-3&operand2=3')
+                .expect(200)
+                .end(function (err, res) {
+                    expect(res.body).to.eql({ result: -27 });
+                    done();
+                });
+        });
+        it('fractional base and integer exponent', function (done) {
+            request.get('/arithmetic?operation=power&operand1=1.5&operand2=2')
+                .expect(200)
+                .end(function (err, res) {
+                    expect(res.body).to.eql({ result: 2.25 });
+                    done();
+                });
+        });
+    });
 
     describe('Multiplication', function () {
         it('multiplies two positive integers', function (done) {
